@@ -1,0 +1,347 @@
+@import 'tailwindcss';
+
+/*
+  "Spectral" — the visual system for the Novel Inorganic Materials Lab.
+
+  Classic academic structure (serif display, generous measure, restrained
+  colour) with accents borrowed from the lab's own physics: thin-film
+  interference, absorption spectra, photoluminescence. The spectral gradient is
+  an accent only — it never becomes a background wash.
+*/
+
+@theme {
+  /* Ink — the deep end. Used for hero sections and dark surfaces. */
+  --color-ink-900: #070b16;
+  --color-ink-800: #0c1324;
+  --color-ink-700: #141d33;
+  --color-ink-600: #1e2b47;
+  --color-ink-500: #33425f;
+
+  /* Cream — the paper end. Warm, not clinical white. */
+  --color-cream-50: #fdfcfa;
+  --color-cream-100: #f8f5ef;
+  --color-cream-200: #eee9df;
+  --color-cream-300: #ddd6c8;
+
+  /* Spectral accents — ordered as they fall in a dispersed beam. */
+  --color-spectral-violet: #7c4dff;
+  --color-spectral-indigo: #4a63f5;
+  --color-spectral-azure: #2e9bff;
+  --color-spectral-cyan: #22d3ee;
+  --color-spectral-teal: #17c7a4;
+  --color-spectral-amber: #ffb020;
+
+  --font-display: var(--font-spectral), ui-serif, Georgia, 'Songti TC',
+    'Noto Serif CJK TC', serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, 'PingFang TC',
+    'Noto Sans CJK TC', 'Microsoft JhengHei', sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+  Semantic surface tokens — the only place light and dark differ.
+
+  Each token declares both values through `light-dark()`, which resolves
+  against the element's `color-scheme`. That means switching the whole theme is
+  a single property change on <html>, and there is exactly one definition of
+  each colour rather than a light block and a dark block that drift apart.
+
+  `color-scheme` also themes native UI — scrollbars, form controls, the
+  browser's own chrome — which a class-based dark mode does not.
+*/
+:root {
+  /* No explicit choice: follow the reader's device. */
+  color-scheme: light dark;
+
+  --surface: light-dark(var(--color-cream-50), var(--color-ink-900));
+  --surface-raised: light-dark(#ffffff, var(--color-ink-800));
+  --surface-sunken: light-dark(var(--color-cream-100), #05080f);
+  --border-subtle: light-dark(var(--color-cream-300), var(--color-ink-600));
+  --text-strong: light-dark(var(--color-ink-900), var(--color-cream-50));
+  --text-body: light-dark(#2c3547, #c3ccdb);
+  --text-muted: light-dark(#5d6779, #8e9ab0);
+  --accent: light-dark(
+    var(--color-spectral-indigo),
+    var(--color-spectral-cyan)
+  );
+  --accent-contrast: light-dark(#ffffff, var(--color-ink-900));
+}
+
+/* An explicit choice from the toggle, restored before first paint. */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-border-subtle: var(--border-subtle);
+  --color-text-strong: var(--text-strong);
+  --color-text-body: var(--text-body);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--text-body);
+    font-family: var(--font-sans);
+    font-feature-settings: 'kern', 'liga';
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--text-strong);
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-spectral-cyan) 28%, transparent);
+    color: var(--text-strong);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-spectral-azure);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* The dispersed-beam gradient, used for rules, underlines and edges. */
+  .spectral-bar {
+    background-image: linear-gradient(
+      90deg,
+      var(--color-spectral-violet),
+      var(--color-spectral-indigo),
+      var(--color-spectral-azure),
+      var(--color-spectral-cyan),
+      var(--color-spectral-teal),
+      var(--color-spectral-amber)
+    );
+  }
+
+  .spectral-text {
+    background-image: linear-gradient(
+      90deg,
+      var(--color-spectral-azure),
+      var(--color-spectral-cyan),
+      var(--color-spectral-teal)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /*
+    An absorption-spectrum rule: a faint baseline with one absorption dip,
+    used to separate sections. Drawn in CSS so it costs nothing.
+  */
+  .spectral-rule {
+    height: 1px;
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      var(--border-subtle) 12%,
+      var(--border-subtle) 40%,
+      color-mix(in oklab, var(--color-spectral-azure) 55%, transparent) 50%,
+      var(--border-subtle) 60%,
+      var(--border-subtle) 88%,
+      transparent
+    );
+  }
+
+  /* Iridescent edge that resolves on hover, like a thin film catching light. */
+  .film-card {
+    position: relative;
+    background-color: var(--surface-raised);
+    border: 1px solid var(--border-subtle);
+    transition:
+      transform 0.5s var(--ease-out-expo),
+      border-color 0.4s ease;
+  }
+
+  /*
+    A gradient *ring*, not a gradient fill. The two masks cancel everywhere
+    except the 1px padding band, which leaves only the border lit. Done with
+    masking rather than a z-index:-1 layer, because any stacking context on the
+    card would push that layer in front of the card's own background.
+  */
+  .film-card::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    background-image: linear-gradient(
+      130deg,
+      var(--color-spectral-violet),
+      var(--color-spectral-azure),
+      var(--color-spectral-cyan),
+      var(--color-spectral-amber)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  .film-card:hover::after,
+  .film-card:focus-within::after {
+    opacity: 1;
+  }
+
+  .film-card:hover {
+    transform: translateY(-3px);
+  }
+
+  /* Long-form prose, sized for reading rather than for filling the viewport. */
+  .prose-lab {
+    color: var(--text-body);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+
+  .prose-lab > * + * {
+    margin-top: 1.15em;
+  }
+
+  .prose-lab h2 {
+    font-size: 1.5rem;
+    margin-top: 2em;
+  }
+
+  .prose-lab h3 {
+    font-size: 1.25rem;
+    margin-top: 1.75em;
+  }
+
+  .prose-lab strong {
+    color: var(--text-strong);
+    font-weight: 600;
+  }
+
+  .prose-lab em {
+    font-style: italic;
+  }
+
+  .prose-lab a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  .prose-lab ul,
+  .prose-lab ol {
+    padding-left: 1.4em;
+  }
+
+  .prose-lab ul {
+    list-style: disc;
+  }
+
+  .prose-lab ol {
+    list-style: decimal;
+  }
+
+  .prose-lab li + li {
+    margin-top: 0.4em;
+  }
+
+  .prose-lab blockquote {
+    border-left: 2px solid var(--color-spectral-azure);
+    padding-left: 1em;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .prose-lab code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.9em;
+    background-color: var(--surface-sunken);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+}
+
+@layer utilities {
+  /*
+    Scroll reveal: content resolves out of the noise floor rather than sliding
+    in. Elements start hidden ONLY when the observer is active, so if JS never
+    runs the content is still visible (see Reveal.tsx).
+  */
+  [data-reveal='pending'] {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(3px);
+  }
+
+  [data-reveal='shown'] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition:
+      opacity 0.75s var(--ease-out-expo),
+      transform 0.75s var(--ease-out-expo),
+      filter 0.75s var(--ease-out-expo);
+  }
+}
+
+/* Keep the page crossfade brisk — navigation should feel instant, not staged. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+}
+
+/* Motion is decoration here; anyone who opts out loses nothing. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal='pending'] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .film-card:hover {
+    transform: none;
+  }
+}

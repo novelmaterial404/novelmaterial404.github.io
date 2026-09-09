@@ -1,0 +1,67 @@
+{
+  "nav": {
+    "home": "選單",
+    "research": "研究",
+    "publications": "著作",
+    "people": "成員",
+    "news": "消息",
+    "join": "加入我們",
+    "contact": "聯絡我們",
+    "about": "關於"
+  },
+  "common": {
+    "skipToContent": "跳至主要內容",
+    "readMore": "閱讀更多",
+    "viewAll": "查看全部",
+    "backTo": "返回",
+    "toggleTheme": "切換淺色／深色模式"
+  },
+  "home": {
+    "exploreResearch": "探索研究方向",
+    "joinTheLab": "加入實驗室",
+    "researchHeading": "研究方向",
+    "researchLead": "四條研究主軸，皆探討光與電荷在不完美材料中的行為。",
+    "selectedPublications": "代表著作",
+    "latestNews": "最新消息",
+    "meetTheTeam": "研究團隊"
+  },
+  "research": {
+    "title": "研究",
+    "lead": "我們研究什麼，以及為什麼。",
+    "backToResearch": "返回研究"
+  },
+  "publications": {
+    "title": "著作",
+    "lead": "同儕審查之期刊論文與專書章節。",
+    "all": "所有年份",
+    "filterLabel": "依年份篩選",
+    "count": "共 {n} 篇著作",
+    "countOne": "共 1 篇著作",
+    "empty": "此年份尚無著作。",
+    "viewPaper": "檢視論文"
+  },
+  "people": {
+    "title": "成員",
+    "lead": "一個刻意融合化學、物理與工程背景的團隊。",
+    "joinedIn": "加入年份"
+  },
+  "news": {
+    "title": "消息",
+    "lead": "論文、獲獎與實驗室日常。",
+    "empty": "目前尚無消息。"
+  },
+  "join": {
+    "title": "加入我們",
+    "recruiting": "招收中",
+    "notRecruiting": "目前未開放"
+  },
+  "contact": {
+    "title": "聯絡我們",
+    "lab": "實驗室",
+    "office": "辦公室",
+    "address": "地址",
+    "email": "電子郵件",
+    "phone": "電話",
+    "openMap": "在地圖中開啟"
+  }
+}

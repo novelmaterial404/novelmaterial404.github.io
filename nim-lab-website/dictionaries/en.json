@@ -1,0 +1,67 @@
+{
+  "nav": {
+    "home": "Menu",
+    "research": "Research",
+    "publications": "Publications",
+    "people": "People",
+    "news": "News",
+    "join": "Join Us",
+    "contact": "Contact",
+    "about": "About"
+  },
+  "common": {
+    "skipToContent": "Skip to content",
+    "readMore": "Read more",
+    "viewAll": "View all",
+    "backTo": "Back to",
+    "toggleTheme": "Switch between light and dark"
+  },
+  "home": {
+    "exploreResearch": "Explore our research",
+    "joinTheLab": "Join the lab",
+    "researchHeading": "Research areas",
+    "researchLead": "Four threads, all asking how light and charge behave in imperfect materials.",
+    "selectedPublications": "Selected publications",
+    "latestNews": "Latest news",
+    "meetTheTeam": "The team"
+  },
+  "research": {
+    "title": "Research",
+    "lead": "What we work on, and why.",
+    "backToResearch": "Back to research"
+  },
+  "publications": {
+    "title": "Publications",
+    "lead": "Peer-reviewed journal articles and book chapters.",
+    "all": "All years",
+    "filterLabel": "Filter by year",
+    "count": "{n} publications",
+    "countOne": "1 publication",
+    "empty": "No publications for this year.",
+    "viewPaper": "View paper"
+  },
+  "people": {
+    "title": "People",
+    "lead": "A group deliberately mixed across chemistry, physics and engineering.",
+    "joinedIn": "Joined"
+  },
+  "news": {
+    "title": "News",
+    "lead": "Papers, awards, and life in the lab.",
+    "empty": "No news yet."
+  },
+  "join": {
+    "title": "Join us",
+    "recruiting": "Recruiting",
+    "notRecruiting": "Not currently open"
+  },
+  "contact": {
+    "title": "Contact",
+    "lab": "Lab",
+    "office": "Office",
+    "address": "Address",
+    "email": "Email",
+    "phone": "Phone",
+    "openMap": "Open in Maps"
+  }
+}
