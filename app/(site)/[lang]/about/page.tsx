@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import PageHeader from '@/app/components/PageHeader';
 import Reveal from '@/app/components/Reveal';
-import { isLocale, locales } from '@/lib/i18n';
+import { getDictionary, isLocale, locales } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/seo';
 import { pick, reader, renderLocalisedBody } from '@/lib/content';
 
 export function generateStaticParams() {
@@ -14,8 +15,16 @@ export async function generateMetadata({
 }: PageProps<'/[lang]/about'>): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
-  const page = await reader.singletons.about.read();
-  return { title: pick(page?.heading, lang) || 'About' };
+  const [dict, page] = await Promise.all([
+    getDictionary(lang),
+    reader.singletons.about.read(),
+  ]);
+  return pageMetadata({
+    lang,
+    path: 'about',
+    title: pick(page?.heading, lang) || dict.nav.about,
+    description: dict.seo.about,
+  });
 }
 
 export default async function AboutPage({

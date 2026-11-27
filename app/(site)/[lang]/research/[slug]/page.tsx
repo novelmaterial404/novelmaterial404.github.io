@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Reveal from '@/app/components/Reveal';
 import { getDictionary, isLocale, locales } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/seo';
 import {
   getResearchAreas,
   pick,
@@ -27,7 +28,12 @@ export async function generateMetadata({
   if (!area) return {};
   const title =
     lang === 'zh-Hant' && area.titleZhHant ? area.titleZhHant : area.title;
-  return { title, description: pick(area.summary, lang) };
+  return pageMetadata({
+    lang,
+    path: `research/${slug}`,
+    title,
+    description: pick(area.summary, lang),
+  });
 }
 
 export default async function ResearchAreaPage({

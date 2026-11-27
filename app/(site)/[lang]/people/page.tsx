@@ -4,6 +4,8 @@ import PageHeader from '@/app/components/PageHeader';
 import PersonAvatar from '@/app/components/PersonAvatar';
 import Reveal from '@/app/components/Reveal';
 import { getDictionary, isLocale, locales } from '@/lib/i18n';
+import { pageMetadata, personStructuredData } from '@/lib/seo';
+import JsonLd from '@/app/components/JsonLd';
 import {
   getPeople,
   groupByRole,
@@ -24,7 +26,12 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const dict = await getDictionary(lang);
-  return { title: dict.people.title, description: dict.people.lead };
+  return pageMetadata({
+    lang,
+    path: 'people',
+    title: dict.people.title,
+    description: dict.seo.people,
+  });
 }
 
 export default async function PeoplePage({
@@ -35,9 +42,11 @@ export default async function PeoplePage({
 
   const [dict, people] = await Promise.all([getDictionary(lang), getPeople()]);
   const groups = groupByRole(people);
+  const pi = people.find((p) => p.entry.role === 'pi');
 
   return (
     <>
+      {pi && <JsonLd data={personStructuredData(pi.entry, lang)} />}
       <PageHeader title={dict.people.title} lead={dict.people.lead} />
 
       <div className="mx-auto max-w-6xl space-y-16 px-5 pb-24 sm:px-8">

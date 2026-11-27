@@ -2,7 +2,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import InterferenceField from '@/app/components/InterferenceField';
 import Reveal from '@/app/components/Reveal';
+import type { Metadata } from 'next';
 import { getDictionary, isLocale } from '@/lib/i18n';
+import { labStructuredData, pageMetadata } from '@/lib/seo';
+import JsonLd from '@/app/components/JsonLd';
 import {
   formatDate,
   getNews,
@@ -12,6 +15,19 @@ import {
   renderLocalisedBody,
   reader,
 } from '@/lib/content';
+
+export async function generateMetadata({
+  params,
+}: PageProps<'/[lang]'>): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  return pageMetadata({
+    lang,
+    absoluteTitle: dict.seo.homeTitle,
+    description: dict.seo.home,
+  });
+}
 
 export default async function HomePage({ params }: PageProps<'/[lang]'>) {
   const { lang } = await params;
@@ -34,9 +50,11 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
   const featured = pubs.filter((p) => p.entry.featured).slice(0, 4);
   const latest = news.slice(0, 3);
   const highlights = home?.highlights ?? [];
+  const structuredData = await labStructuredData(lang);
 
   return (
     <>
+      <JsonLd data={structuredData} />
       {/* ------------------------------------------------------------ hero */}
       <section className="relative isolate overflow-hidden bg-ink-900">
         <InterferenceField />

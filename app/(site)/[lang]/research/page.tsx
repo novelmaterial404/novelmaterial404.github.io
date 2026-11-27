@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import PageHeader from '@/app/components/PageHeader';
 import Reveal from '@/app/components/Reveal';
 import { getDictionary, isLocale, locales } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/seo';
 import { getResearchAreas, pick } from '@/lib/content';
 
 export function generateStaticParams() {
@@ -17,7 +18,12 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const dict = await getDictionary(lang);
-  return { title: dict.research.title, description: dict.research.lead };
+  return pageMetadata({
+    lang,
+    path: 'research',
+    title: dict.research.title,
+    description: dict.seo.research,
+  });
 }
 
 export default async function ResearchPage({

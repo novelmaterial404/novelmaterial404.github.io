@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import PageHeader from '@/app/components/PageHeader';
 import Reveal from '@/app/components/Reveal';
 import { getDictionary, isLocale, locales } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/seo';
 import { pick, reader } from '@/lib/content';
 
 export function generateStaticParams() {
@@ -18,7 +19,12 @@ export async function generateMetadata({
     getDictionary(lang),
     reader.singletons.contact.read(),
   ]);
-  return { title: pick(page?.heading, lang) || dict.contact.title };
+  return pageMetadata({
+    lang,
+    path: 'contact',
+    title: pick(page?.heading, lang) || dict.contact.title,
+    description: dict.seo.contact,
+  });
 }
 
 export default async function ContactPage({

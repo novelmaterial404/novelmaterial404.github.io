@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import PageHeader from '@/app/components/PageHeader';
 import Reveal from '@/app/components/Reveal';
 import { getDictionary, isLocale, locales } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/seo';
 import { formatDate, getGallery } from '@/lib/content';
 
 /*
@@ -42,7 +43,12 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const dict = await getDictionary(lang);
-  return { title: dict.gallery.title, description: dict.gallery.lead };
+  return pageMetadata({
+    lang,
+    path: 'gallery',
+    title: dict.gallery.title,
+    description: dict.seo.gallery,
+  });
 }
 
 export default async function GalleryPage({

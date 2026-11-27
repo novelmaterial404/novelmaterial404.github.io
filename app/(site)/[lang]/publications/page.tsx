@@ -5,6 +5,7 @@ import PublicationList, {
   type PublicationItem,
 } from '@/app/components/PublicationList';
 import { getDictionary, isLocale, locales } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/seo';
 import { getPublications } from '@/lib/content';
 
 export function generateStaticParams() {
@@ -17,7 +18,12 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const dict = await getDictionary(lang);
-  return { title: dict.publications.title, description: dict.publications.lead };
+  return pageMetadata({
+    lang,
+    path: 'publications',
+    title: dict.publications.title,
+    description: dict.seo.publications,
+  });
 }
 
 export default async function PublicationsPage({

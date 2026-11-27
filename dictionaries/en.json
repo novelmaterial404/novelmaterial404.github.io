@@ -69,5 +69,17 @@
     "email": "Email",
     "phone": "Phone",
     "openMap": "Open in Maps"
+  },
+  "seo": {
+    "homeTitle": "Novel Inorganic Materials Lab | National Taiwan University",
+    "home": "The Novel Inorganic Materials Lab at National Taiwan University (NTU GIPO), led by Prof. Yi-Teng Huang, studies perovskite-inspired semiconductors, photovoltaics, ultrafast spectroscopy and nanophotonics.",
+    "about": "About the Novel Inorganic Materials Lab at National Taiwan University, founded in 2025 by Prof. Yi-Teng Huang at the Graduate Institute of Photonics and Optoelectronics.",
+    "research": "Research at the Novel Inorganic Materials Lab, NTU: perovskite-inspired materials, photovoltaics and optoelectronic devices, ultrafast spectroscopy, and nanophotonics and metasurfaces.",
+    "publications": "Peer-reviewed publications by Prof. Yi-Teng Huang and the Novel Inorganic Materials Lab at National Taiwan University, on perovskite-inspired materials, photovoltaics and spectroscopy.",
+    "people": "Meet the Novel Inorganic Materials Lab at National Taiwan University: Prof. Yi-Teng Huang and the group members.",
+    "gallery": "Photos of the Novel Inorganic Materials Lab at National Taiwan University: group photos and lab life.",
+    "news": "News from the Novel Inorganic Materials Lab at National Taiwan University: papers, awards and lab life.",
+    "join": "Join the Novel Inorganic Materials Lab at NTU GIPO. Openings for master's students, undergraduate researchers and postdoctoral researchers.",
+    "contact": "Contact the Novel Inorganic Materials Lab: R404, EE Building II, National Taiwan University, No. 1, Sec. 4, Roosevelt Rd., Taipei, Taiwan."
   }
 }

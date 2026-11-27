@@ -6,6 +6,7 @@ import SiteHeader, { type NavItem } from '@/app/components/SiteHeader';
 import SiteFooter from '@/app/components/SiteFooter';
 import { getDictionary, isLocale, locales, type Locale } from '@/lib/i18n';
 import { getSettings, pick, reader } from '@/lib/content';
+import { SITE_URL } from '@/lib/seo';
 import '../../globals.css';
 
 /*
@@ -28,7 +29,6 @@ const inter = Inter({
   display: 'swap',
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -45,22 +45,15 @@ export async function generateMetadata({
   const tagline = pick(settings?.tagline, lang);
   const institution = pick(settings?.institution, lang);
 
+  // Canonical, hreflang and social cards are set per page by pageMetadata()
+  // in lib/seo.ts — setting them here would give every page the home page's.
   return {
-    metadataBase: new URL(SITE_URL),
+    metadataBase: new URL(`${SITE_URL}/`),
     title: { default: name, template: `%s · ${name}` },
     description: tagline || institution,
-    alternates: {
-      canonical: `/${lang}`,
-      // hreflang pairs the two language versions for search engines.
-      languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])),
-    },
-    openGraph: {
-      title: name,
-      description: tagline || institution,
-      locale: lang === 'zh-Hant' ? 'zh_TW' : 'en_US',
-      type: 'website',
-      siteName: name,
-    },
+    applicationName: name,
+    authors: [{ name: lang === 'zh-Hant' ? '黃奕騰' : 'Yi-Teng Huang' }],
+    formatDetection: { telephone: false, email: false, address: false },
   };
 }
 

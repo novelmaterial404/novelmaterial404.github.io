@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import PageHeader from '@/app/components/PageHeader';
 import Reveal from '@/app/components/Reveal';
 import { getDictionary, isLocale, locales } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/seo';
 import { pick, reader, renderLocalisedBody } from '@/lib/content';
 
 export function generateStaticParams() {
@@ -16,10 +17,12 @@ export async function generateMetadata({
   if (!isLocale(lang)) return {};
   const page = await reader.singletons.join.read();
   const dict = await getDictionary(lang);
-  return {
+  return pageMetadata({
+    lang,
+    path: 'join',
     title: pick(page?.heading, lang) || dict.join.title,
-    description: pick(page?.intro, lang),
-  };
+    description: dict.seo.join,
+  });
 }
 
 export default async function JoinPage({ params }: PageProps<'/[lang]/join'>) {

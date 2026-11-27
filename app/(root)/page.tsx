@@ -13,9 +13,20 @@ import type { Metadata } from 'next';
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
+const site = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
+
+// Not indexed itself (it only forwards), but it tells search engines where
+// the two language versions of the home page are.
 export const metadata: Metadata = {
-  title: 'Novel Inorganic Materials Lab',
-  robots: { index: false },
+  title: 'Novel Inorganic Materials Lab | National Taiwan University',
+  robots: { index: false, follow: true },
+  alternates: {
+    languages: {
+      en: `${site}/en/`,
+      'zh-Hant': `${site}/zh-Hant/`,
+      'x-default': `${site}/en/`,
+    },
+  },
 };
 
 const pickLanguage = `(function(){try{

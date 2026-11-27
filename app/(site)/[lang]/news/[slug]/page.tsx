@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Reveal from '@/app/components/Reveal';
 import { getDictionary, isLocale, locales } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/seo';
 import {
   formatDate,
   getNews,
@@ -28,7 +29,13 @@ export async function generateMetadata({
   if (!item) return {};
   const title =
     lang === 'zh-Hant' && item.titleZhHant ? item.titleZhHant : item.title;
-  return { title, description: pick(item.summary, lang) };
+  return pageMetadata({
+    lang,
+    path: `news/${slug}`,
+    title,
+    description: pick(item.summary, lang),
+    type: 'article',
+  });
 }
 
 export default async function NewsItemPage({
