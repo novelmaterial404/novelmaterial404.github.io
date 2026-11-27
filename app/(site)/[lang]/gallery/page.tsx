@@ -1,3 +1,5 @@
+import path from 'node:path';
+import sharp from 'sharp';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
@@ -10,9 +12,25 @@ import { formatDate, getGallery } from '@/lib/content';
   Photos of the lab. Each entry is a YAML file in content/gallery/ pointing at
   an image in public/images/gallery/ (see keystatic.config.ts for the fields).
   Clicking a photo opens the full-size file.
+
+  Photos keep their own shape (no cropping — group photos lose people at the
+  edges otherwise), laid out in columns. Their dimensions are read from the
+  files at build time.
 */
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
+async function imageSize(src: string) {
+  try {
+    const { width, height } = await sharp(
+      path.join(process.cwd(), 'public', src),
+    ).metadata();
+    if (width && height) return { width, height };
+  } catch {
+    // Missing or remote file: fall back to a common photo shape.
+  }
+  return { width: 1200, height: 900 };
+}
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -34,6 +52,7 @@ export default async function GalleryPage({
   if (!isLocale(lang)) notFound();
 
   const [dict, photos] = await Promise.all([getDictionary(lang), getGallery()]);
+  const sizes = await Promise.all(photos.map((p) => imageSize(p.entry.image)));
 
   return (
     <>
@@ -43,7 +62,7 @@ export default async function GalleryPage({
         {photos.length === 0 ? (
           <p className="text-text-muted">{dict.gallery.empty}</p>
         ) : (
-          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="gap-5 sm:columns-2 lg:columns-3 [&>*]:mb-5 [&>*]:break-inside-avoid">
             {photos.map((photo, i) => {
               const caption =
                 lang === 'zh-Hant' && photo.entry.captionZhHant
@@ -60,14 +79,15 @@ export default async function GalleryPage({
                         href={src.startsWith('/') ? `${basePath}${src}` : src}
                         target="_blank"
                         rel="noreferrer noopener"
-                        className="group relative block aspect-[4/3] overflow-hidden bg-surface-sunken"
+                        className="group block overflow-hidden bg-surface-sunken"
                       >
                         <Image
                           src={src}
                           alt={caption}
-                          fill
+                          width={sizes[i].width}
+                          height={sizes[i].height}
                           sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
-                          className="object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                          className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                         />
                       </a>
                       {(caption || date) && (
