@@ -42,6 +42,7 @@ function bilingualText(options: {
 
 const roleOptions = [
   { label: 'Principal Investigator', value: 'pi' },
+  { label: 'Group Member', value: 'member' },
   { label: 'Postdoctoral Researcher', value: 'postdoc' },
   { label: 'PhD Student', value: 'phd' },
   { label: "Master's Student", value: 'masters' },

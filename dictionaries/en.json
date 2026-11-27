@@ -4,6 +4,7 @@
     "research": "Research",
     "publications": "Publications",
     "people": "People",
+    "gallery": "Gallery",
     "news": "News",
     "join": "Join Us",
     "contact": "Contact",
@@ -44,6 +45,11 @@
     "title": "People",
     "lead": "A group deliberately mixed across chemistry, physics and engineering.",
     "joinedIn": "Joined"
+  },
+  "gallery": {
+    "title": "Gallery",
+    "lead": "Life in and around the lab.",
+    "empty": "Photos coming soon."
   },
   "news": {
     "title": "News",

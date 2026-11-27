@@ -69,6 +69,7 @@ function navItems(lang: Locale, dict: { nav: Record<string, string> }): NavItem[
     { href: `/${lang}/research`, label: dict.nav.research },
     { href: `/${lang}/publications`, label: dict.nav.publications },
     { href: `/${lang}/people`, label: dict.nav.people },
+    { href: `/${lang}/gallery`, label: dict.nav.gallery },
     { href: `/${lang}/news`, label: dict.nav.news },
     { href: `/${lang}/join`, label: dict.nav.join },
     { href: `/${lang}/contact`, label: dict.nav.contact },
@@ -162,7 +163,7 @@ export default async function SiteLayout({
           note={pick(settings?.footerNote, lang)}
           room={pick(contact?.labRoom, lang)}
           links={settings?.links ?? []}
-          // About is kept out of the header to hold the nav to six items, so
+          // About is kept out of the header to keep the nav short, so
           // the footer is where it gets a permanent home.
           items={[{ href: `/${lang}/about`, label: dict.nav.about }, ...items]}
         />

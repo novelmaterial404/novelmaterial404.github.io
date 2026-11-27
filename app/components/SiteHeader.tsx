@@ -60,7 +60,7 @@ export default function SiteHeader({
                     href={item.href}
                     aria-current={isActive(item.href) ? 'page' : undefined}
                     className={[
-                      'relative rounded-md px-3 py-2 text-sm transition-colors',
+                      'relative block rounded-md px-2.5 py-2 text-sm whitespace-nowrap transition-colors xl:px-3',
                       isActive(item.href)
                         ? 'text-text-strong'
                         : 'text-text-muted hover:text-text-strong',
@@ -68,7 +68,7 @@ export default function SiteHeader({
                   >
                     {item.label}
                     {isActive(item.href) && (
-                      <span className="spectral-bar absolute inset-x-3 -bottom-px h-0.5 rounded-full" />
+                      <span className="spectral-bar absolute inset-x-2.5 -bottom-px h-0.5 rounded-full xl:inset-x-3" />
                     )}
                   </Link>
                 </li>

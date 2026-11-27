@@ -75,6 +75,7 @@ export async function renderLocalisedBody(
 
 export const roleOrder = [
   'pi',
+  'member',
   'postdoc',
   'phd',
   'masters',
@@ -88,6 +89,7 @@ export type Role = (typeof roleOrder)[number];
 
 export const roleLabels: Record<Role, Bilingual> = {
   pi: { en: 'Principal Investigator', zhHant: '實驗室主持人' },
+  member: { en: 'Group Members', zhHant: '實驗室成員' },
   postdoc: { en: 'Postdoctoral Researchers', zhHant: '博士後研究員' },
   phd: { en: 'PhD Students', zhHant: '博士班學生' },
   masters: { en: "Master's Students", zhHant: '碩士班學生' },
